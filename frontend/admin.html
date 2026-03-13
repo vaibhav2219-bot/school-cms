@@ -271,7 +271,7 @@ margin-top:10px;
 
 async function loadContactMessages(){
 
-const res = await fetch("http://localhost:5000/api/contact")
+const res = await fetch("/api/contact")
 const data = await res.json()
 
 let html=""
@@ -305,7 +305,7 @@ window.location="login.html"
 
 async function loadAbout(){
 
-const res = await fetch("http://localhost:5000/api/about")
+const res = await fetch("/api/about")
 const data = await res.json()
 
 if(data){
@@ -314,7 +314,7 @@ document.getElementById("aboutTitle").value = data.title || ""
 document.getElementById("aboutDescription").value = data.description || ""
 
 if(data.image){
-document.getElementById("aboutPreview").src = "http://localhost:5000/uploads/"+data.image
+document.getElementById("aboutPreview").src = "/uploads/"+data.image
 }
 
 }
@@ -332,7 +332,7 @@ const image = document.getElementById("aboutImage").files[0]
 
 if(image) formData.append("image",image)
 
-await fetch("http://localhost:5000/api/about/save",{
+await fetch("/api/about/save",{
 method:"POST",
 body:formData
 })
@@ -343,7 +343,7 @@ loadAbout()
 
 async function loadSettings(){
 
-const res = await fetch("http://localhost:5000/api/settings")
+const res = await fetch("/api/settings")
 const data = await res.json()
 
 if(data){
@@ -358,7 +358,7 @@ document.getElementById("twitter").value = data.twitter || ""
 document.getElementById("youtube").value = data.youtube || ""
 
 if(data.logo){
-document.getElementById("logoPreview").src="http://localhost:5000/uploads/"+data.logo
+document.getElementById("logoPreview").src="/uploads/"+data.logo
 }
 
 }
@@ -367,7 +367,7 @@ document.getElementById("logoPreview").src="http://localhost:5000/uploads/"+data
 
 async function loadPrincipal(){
 
-const res = await fetch("http://localhost:5000/api/principal")
+const res = await fetch("/api/principal")
 const data = await res.json()
 
 if(data){
@@ -376,7 +376,7 @@ document.getElementById("principalName").value=data.name || ""
 document.getElementById("principalMessage").value=data.message || ""
 
 if(data.image){
-document.getElementById("principalPreview").src="http://localhost:5000/uploads/"+data.image
+document.getElementById("principalPreview").src="/uploads/"+data.image
 }
 
 }
@@ -400,7 +400,7 @@ const logo=document.getElementById("logo").files[0]
 
 if(logo) formData.append("logo",logo)
 
-await fetch("http://localhost:5000/api/settings/save",{
+await fetch("/api/settings/save",{
 method:"POST",
 body:formData
 })
@@ -420,7 +420,7 @@ const image=document.getElementById("principalImage").files[0]
 
 if(image) formData.append("image",image)
 
-await fetch("http://localhost:5000/api/principal/save",{
+await fetch("/api/principal/save",{
 method:"POST",
 body:formData
 })
@@ -432,7 +432,7 @@ loadPrincipal()
 
 async function loadNotices(){
 
-const res=await fetch("http://localhost:5000/api/notices")
+const res=await fetch("/api/notices")
 const data=await res.json()
 
 let html=""
@@ -456,7 +456,7 @@ async function addNotice(){
 const title=document.getElementById("noticeTitle").value
 const description=document.getElementById("noticeDesc").value
 
-await fetch("http://localhost:5000/api/notices/add",{
+await fetch("/api/notices/add",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({title,description})
@@ -468,7 +468,7 @@ loadNotices()
 
 async function deleteNotice(id){
 
-await fetch("http://localhost:5000/api/notices/"+id,{
+await fetch("/api/notices/"+id,{
 method:"DELETE"
 })
 
@@ -478,7 +478,7 @@ loadNotices()
 
 async function loadGallery(){
 
-const res=await fetch("http://localhost:5000/api/gallery")
+const res=await fetch("/api/gallery")
 const data=await res.json()
 
 let html=""
@@ -486,7 +486,7 @@ let html=""
 data.forEach(g=>{
 html+=`
 <div>
-<img src="http://localhost:5000/uploads/${g.image}" class="preview">
+<img src="/uploads/${g.image}" class="preview">
 <button onclick="deleteGallery('${g._id}')" class="btn btn-danger btn-sm">Delete</button>
 </div>
 `
@@ -506,7 +506,7 @@ const formData = new FormData()
 formData.append("image",image)
 formData.append("title",title)
 
-await fetch("http://localhost:5000/api/gallery/upload",{
+await fetch("/api/gallery/upload",{
 method:"POST",
 body:formData
 })
@@ -517,7 +517,7 @@ loadGallery()
 
 async function deleteGallery(id){
 
-await fetch("http://localhost:5000/api/gallery/"+id,{
+await fetch("/api/gallery/"+id,{
 method:"DELETE"
 })
 
@@ -527,7 +527,7 @@ loadGallery()
 
 async function loadSlider(){
 
-const res=await fetch("http://localhost:5000/api/slider")
+const res=await fetch("/api/slider")
 const data=await res.json()
 
 let html=""
@@ -535,7 +535,7 @@ let html=""
 data.forEach(s=>{
 html+=`
 <div>
-<img src="http://localhost:5000/uploads/${s.image}" class="preview">
+<img src="/uploads/${s.image}" class="preview">
 <button onclick="deleteSlider('${s._id}')" class="btn btn-danger btn-sm">Delete</button>
 </div>
 `
@@ -557,7 +557,7 @@ formData.append("image",image)
 formData.append("title",title)
 formData.append("subtitle",subtitle)
 
-await fetch("http://localhost:5000/api/slider/add",{
+await fetch("/api/slider/add",{
 method:"POST",
 body:formData
 })
@@ -568,7 +568,7 @@ loadSlider()
 
 async function deleteSlider(id){
 
-await fetch("http://localhost:5000/api/slider/"+id,{
+await fetch("/api/slider/"+id,{
 method:"DELETE"
 })
 
@@ -578,7 +578,7 @@ loadSlider()
 
 async function loadFacilities(){
 
-const res=await fetch("http://localhost:5000/api/facilities")
+const res=await fetch("/api/facilities")
 const data=await res.json()
 
 let html=""
@@ -602,7 +602,7 @@ async function addFacility(){
 const title=document.getElementById("facilityTitle").value
 const description=document.getElementById("facilityDesc").value
 
-await fetch("http://localhost:5000/api/facilities/add",{
+await fetch("/api/facilities/add",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({title,description})
@@ -614,7 +614,7 @@ loadFacilities()
 
 async function deleteFacility(id){
 
-await fetch("http://localhost:5000/api/facilities/"+id,{
+await fetch("/api/facilities/"+id,{
 method:"DELETE"
 })
 
@@ -624,7 +624,7 @@ loadFacilities()
 
 async function loadDownloads(){
 
-const res=await fetch("http://localhost:5000/api/downloads")
+const res=await fetch("/api/downloads")
 const data=await res.json()
 
 let html=""
@@ -652,7 +652,7 @@ const formData=new FormData()
 formData.append("title",title)
 formData.append("file",file)
 
-await fetch("http://localhost:5000/api/downloads/upload",{
+await fetch("/api/downloads/upload",{
 method:"POST",
 body:formData
 })
@@ -677,7 +677,7 @@ target.style.display="block"
 
 async function deleteDownload(id){
 
-await fetch("http://localhost:5000/api/downloads/"+id,{
+await fetch("/api/downloads/"+id,{
 method:"DELETE"
 })
 

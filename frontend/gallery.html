@@ -22,7 +22,7 @@
 
 async function loadGallery(){
 
-const res = await fetch("http://localhost:5000/api/gallery")
+const res = await fetch("/api/gallery")
 const data = await res.json()
 
 let html=""
@@ -31,7 +31,7 @@ data.forEach(g=>{
 
 html+=`
 <div class="col-md-3 mb-3">
-<img src="http://localhost:5000/uploads/${g.image}" class="img-fluid">
+<img src="/uploads/${g.image}" class="img-fluid">
 </div>
 `
 

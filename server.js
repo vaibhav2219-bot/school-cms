@@ -1,5 +1,6 @@
 const express = require("express")
 const cors = require("cors")
+const path = require("path")
 
 const app = express()
 const connectDB = require("./backend/config/db")
@@ -20,6 +21,8 @@ app.use(express.json())
 
 app.use("/uploads", express.static("uploads"))
 
+app.use(express.static(path.join(__dirname, "frontend")))
+
 connectDB()
 
 app.use("/api/notices", noticeRoutes)
@@ -34,9 +37,11 @@ app.use("/api/about", aboutRoutes)
 app.use("/api/contact",contactRoutes)
 
 app.get("/", (req,res)=>{
-res.send("School CMS Server Running")
+res.sendFile(path.join(__dirname,"frontend","index.html"))
 })
 
-app.listen(5000,()=>{
-console.log("Server running on port 5000")
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT,()=>{
+console.log("Server running on port " + PORT)
 })

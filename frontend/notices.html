@@ -40,7 +40,7 @@ border-radius:5px;
 
 async function loadNotices(){
 
-const res = await fetch("http://localhost:5000/api/notices")
+const res = await fetch("/api/notices")
 const data = await res.json()
 
 let html=""

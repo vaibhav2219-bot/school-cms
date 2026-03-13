@@ -79,7 +79,7 @@ School Website
 
 async function loadDownloads(){
 
-const res = await fetch("http://localhost:5000/api/downloads")
+const res = await fetch("/api/downloads")
 const data = await res.json()
 
 let html=""
@@ -92,7 +92,7 @@ html+=`
 
 <b>${d.title}</b>
 
-<a href="http://localhost:5000/uploads/${d.file}" download class="btn btn-primary btn-sm float-end">
+<a href="/uploads/${d.file}" download class="btn btn-primary btn-sm float-end">
 
 Download
 

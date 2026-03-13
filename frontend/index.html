@@ -590,7 +590,7 @@ View All Notices
 
 async function loadSettings(){
 
-const res = await fetch("http://localhost:5000/api/settings")
+const res = await fetch("/api/settings")
 const data = await res.json()
 
 if(data){
@@ -612,7 +612,7 @@ document.getElementById("schoolPhone").innerText = data.phone || ""
 document.getElementById("schoolEmail").innerText = data.email || ""
 
 if(data.logo){
-document.getElementById("schoolLogo").src = "http://localhost:5000/uploads/" + data.logo
+document.getElementById("schoolLogo").src = "/uploads/" + data.logo
 
 /* SOCIAL LINKS */
 
@@ -628,7 +628,7 @@ document.getElementById("youtubeLink").href = data.youtube || "#"
 
 async function loadAbout(){
 
-const res = await fetch("http://localhost:5000/api/about")
+const res = await fetch("/api/about")
 const data = await res.json()
 
 if(data){
@@ -637,7 +637,7 @@ document.getElementById("aboutText").innerText = data.description || ""
 
 if(data.image){
 document.getElementById("aboutImage").src =
-"http://localhost:5000/uploads/"+data.image
+"/uploads/"+data.image
 }
 
 }
@@ -647,7 +647,7 @@ document.getElementById("aboutImage").src =
 
 async function loadSlider(){
 
-const res=await fetch("http://localhost:5000/api/slider")
+const res=await fetch("/api/slider")
 const data=await res.json()
 
 let html=""
@@ -656,7 +656,7 @@ data.forEach((s,index)=>{
 
 html+=`
 <div class="carousel-item ${index===0?'active':''}">
-<img src="http://localhost:5000/uploads/${s.image}" class="d-block w-100">
+<img src="/uploads/${s.image}" class="d-block w-100">
 </div>
 `
 
@@ -669,7 +669,7 @@ document.getElementById("sliderContainer").innerHTML=html
 
 async function loadNotices(){
 
-const res=await fetch("http://localhost:5000/api/notices")
+const res=await fetch("/api/notices")
 const data=await res.json()
 
 let html=""
@@ -697,7 +697,7 @@ document.getElementById("noticeList").innerHTML=html
 
 async function loadFacilities(){
 
-const res = await fetch("http://localhost:5000/api/facilities")
+const res = await fetch("/api/facilities")
 const data = await res.json()
 
 let html = ""
@@ -734,7 +734,7 @@ document.getElementById("facilityGrid").innerHTML = html
 
 async function loadPrincipal(){
 
-const res=await fetch("http://localhost:5000/api/principal")
+const res=await fetch("/api/principal")
 const data=await res.json()
 
 if(data){
@@ -743,7 +743,7 @@ document.getElementById("principalName").innerText=data.name || ""
 document.getElementById("principalMessage").innerText=data.message || ""
 
 if(data.image){
-document.getElementById("principalImage").src="http://localhost:5000/uploads/"+data.image
+document.getElementById("principalImage").src="/uploads/"+data.image
 }
 
 }
@@ -753,7 +753,7 @@ document.getElementById("principalImage").src="http://localhost:5000/uploads/"+d
 
 async function loadGallery(){
 
-const res=await fetch("http://localhost:5000/api/gallery")
+const res=await fetch("/api/gallery")
 const data=await res.json()
 
 let html=""
@@ -766,7 +766,7 @@ html+=`
 
 <div class="gallery-card">
 
-<img src="http://localhost:5000/uploads/${g.image}" class="img-fluid">
+<img src="/uploads/${g.image}" class="img-fluid">
 
 <h6 class="mt-2 text-center">${g.title || "School Campus"}</h6>
 

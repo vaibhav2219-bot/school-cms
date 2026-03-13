@@ -26,7 +26,7 @@
 
 async function loadAbout(){
 
-const res = await fetch("http://localhost:5000/api/about")
+const res = await fetch("/api/about")
 const data = await res.json()
 
 if(data){
@@ -37,7 +37,7 @@ document.getElementById("aboutDescription").innerText = data.description || ""
 
 if(data.image){
 document.getElementById("aboutImage").src =
-"http://localhost:5000/uploads/" + data.image
+"/uploads/" + data.image
 }
 
 }
