@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>School CMS Admin</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f4f6f9;
+font-family:Arial;
+}
+
+.sidebar{
+height:100vh;
+background:#1e3a5f;
+color:white;
+padding:20px;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:10px;
+border-radius:4px;
+margin-bottom:5px;
+}
+
+.sidebar a:hover{
+background:#2c4c75;
+}
+
+.section{
+background:white;
+padding:20px;
+margin-top:20px;
+border-radius:6px;
+display:none;
+}
+
+.preview{
+width:120px;
+border-radius:5px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+<div class="row">
+
+<div class="col-md-2 sidebar">
+
+<h4 class="mb-4">Admin Panel</h4>
+
+<a href="#" onclick="showSection('dashboard')">Dashboard</a>
+
+<a href="#" onclick="showSection('settings')">Site Settings</a>
+
+<a href="#" onclick="showSection('about')">About</a>
+
+<a href="#" onclick="showSection('principal')">Principal</a>
+
+<a href="#" onclick="showSection('notices')">Notices</a>
+
+<a href="#" onclick="showSection('gallery')">Gallery</a>
+
+<a href="#" onclick="showSection('slider')">Slider</a>
+
+<a href="#" onclick="showSection('facilities')">Facilities</a>
+
+<a href="#" onclick="showSection('downloads')">Downloads</a>
+
+<a href="#" onclick="showSection('messages')">Messages</a>
+
+<button onclick="logout()" class="btn btn-danger mt-4">Logout</button>
+
+</div>
+
+<div class="col-md-10 p-4">
+
+<h2>Dashboard</h2>
+
+<div class="section" id="dashboard">
+
+<h4>Welcome to Admin Dashboard</h4>
+<p>Select a section from the sidebar.</p>
+
+</div>
+
+<!-- SITE SETTINGS -->
+
+<div class="section" id="settings">
+
+<h4>Site Settings</h4>
+
+<input id="schoolName" class="form-control mb-2" placeholder="School Name">
+<input id="phone" class="form-control mb-2" placeholder="Phone">
+<input id="email" class="form-control mb-2" placeholder="Email">
+<input id="address" class="form-control mb-2" placeholder="Address">
+<input id="facebook" class="form-control mb-2" placeholder="Facebook Link">
+<input id="twitter" class="form-control mb-2" placeholder="Twitter Link">
+<input id="youtube" class="form-control mb-2" placeholder="YouTube Link">
+<input type="file" id="logo" class="form-control mb-2">
+
+<img id="logoPreview" class="preview">
+
+<button onclick="saveSettings()" class="btn btn-primary">Save Settings</button>
+
+</div>
+
+
+<!-- ABOUT SCHOOL -->
+
+<div class="section" id="about">
+
+<h4>About School</h4>
+
+<input id="aboutTitle" class="form-control mb-2" placeholder="About Title">
+
+<textarea id="aboutDescription" class="form-control mb-2" placeholder="About Description"></textarea>
+
+<input type="file" id="aboutImage" class="form-control mb-2">
+
+<img id="aboutPreview" class="preview">
+
+<button onclick="saveAbout()" class="btn btn-success">Save About</button>
+
+</div>
+
+
+<!-- PRINCIPAL -->
+
+<div class="section" id="principal">
+
+<h4>Principal Message</h4>
+
+<input id="principalName" class="form-control mb-2" placeholder="Principal Name">
+
+<textarea id="principalMessage" class="form-control mb-2" placeholder="Principal Message"></textarea>
+
+<input type="file" id="principalImage" class="form-control mb-2">
+
+<img id="principalPreview" class="preview">
+
+<button onclick="savePrincipal()" class="btn btn-warning">Save Principal</button>
+
+</div>
+
+<!-- NOTICES -->
+
+<div class="section" id="notices">
+
+<h4>Add Notice</h4>
+
+<input id="noticeTitle" class="form-control mb-2" placeholder="Notice Title">
+
+<textarea id="noticeDesc" class="form-control mb-2" placeholder="Notice Description"></textarea>
+
+<button onclick="addNotice()" class="btn btn-primary">Save Notice</button>
+
+<h5 class="mt-3">All Notices</h5>
+
+<div id="noticeList"></div>
+
+</div>
+
+
+<!-- GALLERY -->
+
+<div class="section" id="gallery">
+
+<h4>Upload Gallery Image</h4>
+
+<input id="galleryTitle" class="form-control mb-2" placeholder="Image Title">
+
+<input type="file" id="galleryImage" class="form-control mb-2">
+
+<button onclick="uploadGallery()" class="btn btn-success">Upload</button>
+
+<h5 class="mt-3">Gallery</h5>
+
+<div id="galleryList"></div>
+
+</div>
+
+
+<!-- SLIDER -->
+
+<div class="section" id="slider">
+
+<h4>Upload Slider</h4>
+
+<input type="file" id="sliderImage" class="form-control mb-2">
+
+<input id="sliderTitle" class="form-control mb-2" placeholder="Slider Title">
+
+<input id="sliderSubtitle" class="form-control mb-2" placeholder="Slider Subtitle">
+
+<button onclick="uploadSlider()" class="btn btn-warning">Upload Slider</button>
+
+<h5 class="mt-3">Slider Images</h5>
+
+<div id="sliderList"></div>
+
+</div>
+
+
+<!-- FACILITIES -->
+
+<div class="section" id="facilities">
+
+<h4>Add Facility</h4>
+
+<input id="facilityTitle" class="form-control mb-2" placeholder="Facility Title">
+
+<textarea id="facilityDesc" class="form-control mb-2" placeholder="Facility Description"></textarea>
+
+<button onclick="addFacility()" class="btn btn-info">Add Facility</button>
+
+<h5 class="mt-3">Facilities</h5>
+
+<div id="facilityList"></div>
+
+</div>
+
+
+<!-- DOWNLOADS -->
+
+<div class="section" id="downloads">
+
+<h4>Upload Download File</h4>
+
+<input id="downloadTitle" class="form-control mb-2" placeholder="File Title">
+
+<input type="file" id="downloadFile" class="form-control mb-2">
+
+<button onclick="uploadDownload()" class="btn btn-primary">Upload</button>
+
+<h5 class="mt-3">Files</h5>
+
+<div id="downloadList"></div>
+
+</div>
+
+
+<!-- CONTACT MESSAGES -->
+
+<div class="section" id="messages">
+
+<h4>Contact Messages</h4>
+
+<div id="contactMessages"></div>
+
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+<script>
+
+async function loadContactMessages(){
+
+const res = await fetch("http://localhost:5000/api/contact")
+const data = await res.json()
+
+let html=""
+
+data.forEach(msg=>{
+
+html+=`
+<div class="border p-2 mb-2">
+
+<b>Name:</b> ${msg.name} <br>
+<b>Email:</b> ${msg.email} <br>
+<b>Message:</b> ${msg.message}
+
+</div>
+`
+
+})
+
+document.getElementById("contactMessages").innerHTML=html
+
+}
+
+if(localStorage.getItem("adminLogged")!=="true"){
+window.location="login.html"
+}
+
+function logout(){
+localStorage.removeItem("adminLogged")
+window.location="login.html"
+}
+
+async function loadAbout(){
+
+const res = await fetch("http://localhost:5000/api/about")
+const data = await res.json()
+
+if(data){
+
+document.getElementById("aboutTitle").value = data.title || ""
+document.getElementById("aboutDescription").value = data.description || ""
+
+if(data.image){
+document.getElementById("aboutPreview").src = "http://localhost:5000/uploads/"+data.image
+}
+
+}
+
+}
+
+async function saveAbout(){
+
+const formData = new FormData()
+
+formData.append("title",document.getElementById("aboutTitle").value)
+formData.append("description",document.getElementById("aboutDescription").value)
+
+const image = document.getElementById("aboutImage").files[0]
+
+if(image) formData.append("image",image)
+
+await fetch("http://localhost:5000/api/about/save",{
+method:"POST",
+body:formData
+})
+
+loadAbout()
+
+}
+
+async function loadSettings(){
+
+const res = await fetch("http://localhost:5000/api/settings")
+const data = await res.json()
+
+if(data){
+
+document.getElementById("schoolName").value=data.schoolName || ""
+document.getElementById("phone").value=data.phone || ""
+document.getElementById("email").value=data.email || ""
+document.getElementById("address").value=data.address || ""
+
+document.getElementById("facebook").value = data.facebook || ""
+document.getElementById("twitter").value = data.twitter || ""
+document.getElementById("youtube").value = data.youtube || ""
+
+if(data.logo){
+document.getElementById("logoPreview").src="http://localhost:5000/uploads/"+data.logo
+}
+
+}
+
+}
+
+async function loadPrincipal(){
+
+const res = await fetch("http://localhost:5000/api/principal")
+const data = await res.json()
+
+if(data){
+
+document.getElementById("principalName").value=data.name || ""
+document.getElementById("principalMessage").value=data.message || ""
+
+if(data.image){
+document.getElementById("principalPreview").src="http://localhost:5000/uploads/"+data.image
+}
+
+}
+
+}
+
+
+async function saveSettings(){
+
+const formData=new FormData()
+
+formData.append("schoolName",document.getElementById("schoolName").value)
+formData.append("phone",document.getElementById("phone").value)
+formData.append("email",document.getElementById("email").value)
+formData.append("address",document.getElementById("address").value)
+formData.append("facebook",document.getElementById("facebook").value)
+formData.append("twitter",document.getElementById("twitter").value)
+formData.append("youtube",document.getElementById("youtube").value)
+
+const logo=document.getElementById("logo").files[0]
+
+if(logo) formData.append("logo",logo)
+
+await fetch("http://localhost:5000/api/settings/save",{
+method:"POST",
+body:formData
+})
+
+loadSettings()
+
+}
+
+async function savePrincipal(){
+
+const formData=new FormData()
+
+formData.append("name",document.getElementById("principalName").value)
+formData.append("message",document.getElementById("principalMessage").value)
+
+const image=document.getElementById("principalImage").files[0]
+
+if(image) formData.append("image",image)
+
+await fetch("http://localhost:5000/api/principal/save",{
+method:"POST",
+body:formData
+})
+
+loadPrincipal()
+
+}
+
+
+async function loadNotices(){
+
+const res=await fetch("http://localhost:5000/api/notices")
+const data=await res.json()
+
+let html=""
+
+data.forEach(n=>{
+html+=`
+<div class="border p-2 mb-2">
+<b>${n.title}</b>
+<p>${n.description}</p>
+<button onclick="deleteNotice('${n._id}')" class="btn btn-danger btn-sm">Delete</button>
+</div>
+`
+})
+
+document.getElementById("noticeList").innerHTML=html
+
+}
+
+async function addNotice(){
+
+const title=document.getElementById("noticeTitle").value
+const description=document.getElementById("noticeDesc").value
+
+await fetch("http://localhost:5000/api/notices/add",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({title,description})
+})
+
+loadNotices()
+
+}
+
+async function deleteNotice(id){
+
+await fetch("http://localhost:5000/api/notices/"+id,{
+method:"DELETE"
+})
+
+loadNotices()
+
+}
+
+async function loadGallery(){
+
+const res=await fetch("http://localhost:5000/api/gallery")
+const data=await res.json()
+
+let html=""
+
+data.forEach(g=>{
+html+=`
+<div>
+<img src="http://localhost:5000/uploads/${g.image}" class="preview">
+<button onclick="deleteGallery('${g._id}')" class="btn btn-danger btn-sm">Delete</button>
+</div>
+`
+})
+
+document.getElementById("galleryList").innerHTML=html
+
+}
+
+async function uploadGallery(){
+
+const image = document.getElementById("galleryImage").files[0]
+const title = document.getElementById("galleryTitle").value
+
+const formData = new FormData()
+
+formData.append("image",image)
+formData.append("title",title)
+
+await fetch("http://localhost:5000/api/gallery/upload",{
+method:"POST",
+body:formData
+})
+
+loadGallery()
+
+}
+
+async function deleteGallery(id){
+
+await fetch("http://localhost:5000/api/gallery/"+id,{
+method:"DELETE"
+})
+
+loadGallery()
+
+}
+
+async function loadSlider(){
+
+const res=await fetch("http://localhost:5000/api/slider")
+const data=await res.json()
+
+let html=""
+
+data.forEach(s=>{
+html+=`
+<div>
+<img src="http://localhost:5000/uploads/${s.image}" class="preview">
+<button onclick="deleteSlider('${s._id}')" class="btn btn-danger btn-sm">Delete</button>
+</div>
+`
+})
+
+document.getElementById("sliderList").innerHTML=html
+
+}
+
+async function uploadSlider(){
+
+const image=document.getElementById("sliderImage").files[0]
+const title=document.getElementById("sliderTitle").value
+const subtitle=document.getElementById("sliderSubtitle").value
+
+const formData=new FormData()
+
+formData.append("image",image)
+formData.append("title",title)
+formData.append("subtitle",subtitle)
+
+await fetch("http://localhost:5000/api/slider/add",{
+method:"POST",
+body:formData
+})
+
+loadSlider()
+
+}
+
+async function deleteSlider(id){
+
+await fetch("http://localhost:5000/api/slider/"+id,{
+method:"DELETE"
+})
+
+loadSlider()
+
+}
+
+async function loadFacilities(){
+
+const res=await fetch("http://localhost:5000/api/facilities")
+const data=await res.json()
+
+let html=""
+
+data.forEach(f=>{
+html+=`
+<div class="border p-2 mb-2">
+<b>${f.title}</b>
+<p>${f.description}</p>
+<button onclick="deleteFacility('${f._id}')" class="btn btn-danger btn-sm">Delete</button>
+</div>
+`
+})
+
+document.getElementById("facilityList").innerHTML=html
+
+}
+
+async function addFacility(){
+
+const title=document.getElementById("facilityTitle").value
+const description=document.getElementById("facilityDesc").value
+
+await fetch("http://localhost:5000/api/facilities/add",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({title,description})
+})
+
+loadFacilities()
+
+}
+
+async function deleteFacility(id){
+
+await fetch("http://localhost:5000/api/facilities/"+id,{
+method:"DELETE"
+})
+
+loadFacilities()
+
+}
+
+async function loadDownloads(){
+
+const res=await fetch("http://localhost:5000/api/downloads")
+const data=await res.json()
+
+let html=""
+
+data.forEach(d=>{
+html+=`
+<div class="border p-2 mb-2">
+<b>${d.title}</b>
+<button onclick="deleteDownload('${d._id}')" class="btn btn-danger btn-sm float-end">Delete</button>
+</div>
+`
+})
+
+document.getElementById("downloadList").innerHTML=html
+
+}
+
+async function uploadDownload(){
+
+const title=document.getElementById("downloadTitle").value
+const file=document.getElementById("downloadFile").files[0]
+
+const formData=new FormData()
+
+formData.append("title",title)
+formData.append("file",file)
+
+await fetch("http://localhost:5000/api/downloads/upload",{
+method:"POST",
+body:formData
+})
+
+loadDownloads()
+
+}
+
+function showSection(id){
+
+document.querySelectorAll(".section").forEach(sec=>{
+sec.style.display="none"
+})
+
+const target = document.getElementById(id)
+
+if(target){
+target.style.display="block"
+}
+
+}
+
+async function deleteDownload(id){
+
+await fetch("http://localhost:5000/api/downloads/"+id,{
+method:"DELETE"
+})
+
+loadDownloads()
+
+}
+
+loadSettings()
+loadPrincipal()
+loadNotices()
+loadGallery()
+loadSlider()
+loadFacilities()
+loadDownloads()
+loadAbout()
+loadContactMessages()
+showSection("dashboard")
+
+
+</script>
+
+</body>
+</html>
